@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
 class FormButton extends StatelessWidget {
-  const FormButton({
-    super.key,
-    required this.disabled,
-    required this.onTap,
-  });
+  const FormButton(
+      {super.key,
+      required this.disabled,
+      required this.onTap,
+      required this.text});
 
   final bool disabled;
   final void Function() onTap;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +33,8 @@ class FormButton extends StatelessWidget {
                 fontSize: Sizes.size16,
                 fontWeight: FontWeight.w600),
             duration: const Duration(milliseconds: 150),
-            child: const Text(
-              "Next",
+            child: Text(
+              text,
               textAlign: TextAlign.center,
             ),
           ),

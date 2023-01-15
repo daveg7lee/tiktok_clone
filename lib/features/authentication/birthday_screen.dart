@@ -94,7 +94,11 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
                 cursorColor: Theme.of(context).primaryColor,
               ),
               Gaps.v32,
-              FormButton(disabled: false, onTap: _onNextTap)
+              FormButton(
+                disabled: false,
+                onTap: _onNextTap,
+                text: "Next",
+              )
             ],
           ),
         ),

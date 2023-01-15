@@ -96,7 +96,11 @@ class _UsernameScreenState extends State<UsernameScreen> {
                 cursorColor: Theme.of(context).primaryColor,
               ),
               Gaps.v32,
-              FormButton(disabled: _username.isEmpty, onTap: _onNextTap)
+              FormButton(
+                disabled: _username.isEmpty,
+                onTap: _onNextTap,
+                text: "Next",
+              )
             ],
           ),
         ),
