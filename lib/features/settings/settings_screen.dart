@@ -27,7 +27,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ListView(
         children: [
           SwitchListTile.adaptive(
-            activeColor: Colors.black,
             value: _notifications,
             onChanged: _onNotificationsChanged,
             title: const Text(
