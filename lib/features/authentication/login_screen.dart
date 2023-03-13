@@ -35,13 +35,12 @@ class LoginScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
               Gaps.v20,
-              const Text(
-                "Manage your account, check notifications, comment on videos, and more.",
-                style: TextStyle(
-                  fontSize: Sizes.size16,
-                  color: Colors.black45,
+              const Opacity(
+                opacity: 0.7,
+                child: Text(
+                  "Manage your account, check notifications, comment on videos, and more.",
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
               Gaps.v40,
               AuthButton(
