@@ -18,13 +18,12 @@ class PersistentTabBar extends SliverPersistentHeaderDelegate {
           ),
         ),
       ),
-      child: TabBar(
-        labelPadding: const EdgeInsets.symmetric(
+      child: const TabBar(
+        labelPadding: EdgeInsets.symmetric(
           vertical: Sizes.size10,
         ),
-        indicatorColor: Theme.of(context).tabBarTheme.labelColor,
         indicatorSize: TabBarIndicatorSize.label,
-        tabs: const [
+        tabs: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: Sizes.size12),
             child: Icon(Icons.grid_4x4_rounded),

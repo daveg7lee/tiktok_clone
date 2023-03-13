@@ -18,7 +18,7 @@ class UserInfo extends StatelessWidget {
             fontSize: Sizes.size18,
           ),
         ),
-        Gaps.v3,
+        Gaps.v2,
         Text(
           string,
           style: TextStyle(
