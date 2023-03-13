@@ -53,10 +53,13 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
           resizeToAvoidBottomInset: false,
           appBar: AppBar(
             elevation: 1,
-            title: CupertinoSearchTextField(
-              controller: _textEditingController,
-              onChanged: _onSearchChanged,
-              onSubmitted: _onSearchSubmitted,
+            title: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: Breakpoints.sm),
+              child: CupertinoSearchTextField(
+                controller: _textEditingController,
+                onChanged: _onSearchChanged,
+                onSubmitted: _onSearchSubmitted,
+              ),
             ),
             bottom: TabBar(
               onTap: _onTapBarTap,
@@ -92,11 +95,9 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: width > Breakpoints.lg
                       ? 5
-                      : width > Breakpoints.md
-                          ? 4
-                          : width > Breakpoints.sm
-                              ? 3
-                              : 2,
+                      : width > Breakpoints.sm
+                          ? 3
+                          : 2,
                   crossAxisSpacing: Sizes.size8,
                   mainAxisSpacing: Sizes.size10,
                   childAspectRatio: 9 / 20,
