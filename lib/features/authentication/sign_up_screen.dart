@@ -32,7 +32,7 @@ class SignUpScreen extends StatelessWidget {
                 children: [
                   Gaps.v80,
                   Text(
-                    S.of(context).signUpTitle("Tiktok", DateTime.now()),
+                    S.of(context).signUpTitle("Tiktok"),
                     style: const TextStyle(
                         fontSize: Sizes.size24, fontWeight: FontWeight.w700),
                   ),
