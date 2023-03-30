@@ -3,6 +3,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/email_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
+import 'package:go_router/go_router.dart';
 
 class UsernameScreen extends StatefulWidget {
   static String routeName = "/username";
@@ -37,9 +38,7 @@ class _UsernameScreenState extends State<UsernameScreen> {
   }
 
   void _onNextTap() {
-    if (_username.isEmpty) return;
-    Navigator.pushNamed(context, EmailScreen.routeName,
-        arguments: EmailScreenArgs(username: _username));
+    context.push(EmailScreen.routeName);
   }
 
   void _onScaffoldTap() {
