@@ -34,6 +34,7 @@ class _VideoPostState extends State<VideoPost>
   late final AnimationController _animationController;
 
   late bool _isPaused = !context.read<PlaybackConfigViewModel>().autoplay;
+  late bool _isMuted = context.read<PlaybackConfigViewModel>().muted;
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized &&
@@ -84,6 +85,17 @@ class _VideoPostState extends State<VideoPost>
     } else {
       _videoPlayerController.setVolume(1);
     }
+  }
+
+  void _onToggleMute() {
+    if (!_isMuted) {
+      _videoPlayerController.setVolume(0);
+    } else {
+      _videoPlayerController.setVolume(1);
+    }
+    setState(() {
+      _isMuted = !_isMuted;
+    });
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
@@ -201,16 +213,12 @@ class _VideoPostState extends State<VideoPost>
             top: 40,
             child: IconButton(
               icon: FaIcon(
-                context.watch<PlaybackConfigViewModel>().muted
+                _isMuted
                     ? FontAwesomeIcons.volumeOff
                     : FontAwesomeIcons.volumeHigh,
                 color: Colors.white,
               ),
-              onPressed: () {
-                context.read<PlaybackConfigViewModel>().setMuted(
-                      !context.read<PlaybackConfigViewModel>().muted,
-                    );
-              },
+              onPressed: _onToggleMute,
             ),
           ),
           Positioned(
