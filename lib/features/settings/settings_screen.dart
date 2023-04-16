@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tiktok_clone/common/widgets/dark_mode_configuration/dark_mode_config.dart';
 import 'package:tiktok_clone/common/widgets/video_configuration/video_config.dart';
 
@@ -41,18 +42,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
           ),
-          AnimatedBuilder(
-            animation: videoConfig,
-            builder: (context, child) => SwitchListTile.adaptive(
-              value: videoConfig.value,
-              onChanged: (value) {
-                videoConfig.value = !videoConfig.value;
-              },
-              title: const Text(
-                "Mute video",
-              ),
-              subtitle: const Text("videos will be muted by default"),
+          SwitchListTile.adaptive(
+            value: context.watch<VideoConfig>().isMuted,
+            onChanged: (value) {
+              context.read<VideoConfig>().toggleIsMuted();
+            },
+            title: const Text(
+              "Mute video",
             ),
+            subtitle: const Text("videos will be muted by default"),
           ),
           SwitchListTile.adaptive(
             value: _notifications,
