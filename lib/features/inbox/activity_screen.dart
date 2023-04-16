@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/common/widgets/dark_mode_configuration/dark_mode_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/utils.dart';
 
 class ActivityScreen extends StatefulWidget {
   static const String routeName = "activity";
@@ -87,7 +87,6 @@ class _ActivityScreenState extends State<ActivityScreen>
 
   @override
   Widget build(BuildContext context) {
-    final isDark = isDarkMode(context);
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(
@@ -159,9 +158,11 @@ class _ActivityScreenState extends State<ActivityScreen>
                       width: Sizes.size52,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: isDark ? Colors.grey.shade800 : Colors.white,
+                        color: darkModeConfig.value
+                            ? Colors.grey.shade800
+                            : Colors.white,
                         border: Border.all(
-                          color: isDark
+                          color: darkModeConfig.value
                               ? Colors.grey.shade700
                               : Colors.grey.shade300,
                           width: Sizes.size1,
@@ -179,7 +180,9 @@ class _ActivityScreenState extends State<ActivityScreen>
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: Sizes.size16,
-                          color: isDark ? Colors.white : Colors.black,
+                          color: darkModeConfig.value
+                              ? Colors.white
+                              : Colors.black,
                         ),
                         children: [
                           const TextSpan(

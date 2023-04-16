@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/common/widgets/dark_mode_configuration/dark_mode_config.dart';
 import 'package:tiktok_clone/constants/breakpoints.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/utils.dart';
 
 final tabs = [
   "Top",
@@ -61,7 +61,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 onChanged: _onSearchChanged,
                 onSubmitted: _onSearchSubmitted,
                 style: TextStyle(
-                  color: isDarkMode(context) ? Colors.white : Colors.black,
+                  color: darkModeConfig.value ? Colors.white : Colors.black,
                 ),
               ),
             ),
@@ -134,7 +134,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       Gaps.v8,
                       DefaultTextStyle(
                         style: TextStyle(
-                          color: isDarkMode(context)
+                          color: darkModeConfig.value
                               ? Colors.grey.shade300
                               : Colors.grey.shade600,
                           fontWeight: FontWeight.bold,

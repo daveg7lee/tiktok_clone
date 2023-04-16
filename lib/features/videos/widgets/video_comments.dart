@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/common/widgets/dark_mode_configuration/dark_mode_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
-import 'package:tiktok_clone/utils.dart';
 
 class VideoComments extends StatefulWidget {
   const VideoComments({super.key});
@@ -36,7 +36,6 @@ class _VideoCommentsState extends State<VideoComments> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = isDarkMode(context);
     final size = MediaQuery.of(context).size;
 
     return Container(
@@ -46,9 +45,9 @@ class _VideoCommentsState extends State<VideoComments> {
       ),
       clipBehavior: Clip.hardEdge,
       child: Scaffold(
-        backgroundColor: isDark ? null : Colors.grey.shade50,
+        backgroundColor: darkModeConfig.value ? null : Colors.grey.shade50,
         appBar: AppBar(
-          backgroundColor: isDark ? null : Colors.grey.shade50,
+          backgroundColor: darkModeConfig.value ? null : Colors.grey.shade50,
           automaticallyImplyLeading: false,
           title: Text(S.of(context).commentTitle(43247, 43247)),
           actions: [
@@ -81,7 +80,8 @@ class _VideoCommentsState extends State<VideoComments> {
                     children: [
                       CircleAvatar(
                         radius: 18,
-                        backgroundColor: isDark ? Colors.grey.shade600 : null,
+                        backgroundColor:
+                            darkModeConfig.value ? Colors.grey.shade600 : null,
                         child: const Text("기현"),
                       ),
                       Gaps.h10,
@@ -160,7 +160,7 @@ class _VideoCommentsState extends State<VideoComments> {
                                   borderSide: BorderSide.none,
                                 ),
                                 filled: true,
-                                fillColor: isDark
+                                fillColor: darkModeConfig.value
                                     ? Colors.grey.shade800
                                     : Colors.grey.shade200,
                                 contentPadding: const EdgeInsets.symmetric(
@@ -175,21 +175,21 @@ class _VideoCommentsState extends State<VideoComments> {
                                     children: [
                                       FaIcon(
                                         FontAwesomeIcons.at,
-                                        color: isDark
+                                        color: darkModeConfig.value
                                             ? Colors.grey.shade500
                                             : Colors.grey.shade900,
                                       ),
                                       Gaps.h16,
                                       FaIcon(
                                         FontAwesomeIcons.gift,
-                                        color: isDark
+                                        color: darkModeConfig.value
                                             ? Colors.grey.shade500
                                             : Colors.grey.shade900,
                                       ),
                                       Gaps.h16,
                                       FaIcon(
                                         FontAwesomeIcons.faceSmile,
-                                        color: isDark
+                                        color: darkModeConfig.value
                                             ? Colors.grey.shade500
                                             : Colors.grey.shade900,
                                       ),
