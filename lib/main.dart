@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tiktok_clone/common/widgets/dark_mode_configuration/dark_mode_config.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/repos/playback_config_repo.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config.vm.dart';
@@ -33,32 +32,14 @@ void main() async {
   ], child: const TikTokApp()));
 }
 
-class TikTokApp extends StatefulWidget {
+class TikTokApp extends ConsumerWidget {
   const TikTokApp({super.key});
 
   @override
-  State<TikTokApp> createState() => _TikTokAppState();
-}
-
-class _TikTokAppState extends State<TikTokApp> {
-  bool _isDarkMode = darkModeConfig.value;
-
-  @override
-  void initState() {
-    super.initState();
-
-    darkModeConfig.addListener(() {
-      setState(() {
-        _isDarkMode = darkModeConfig.value;
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     S.load(const Locale("ko"));
     return MaterialApp.router(
-      routerConfig: router,
+      routerConfig: ref.watch(routerProvider),
       debugShowCheckedModeBanner: false,
       title: 'TikTok Clone',
       localizationsDelegates: const [
@@ -68,7 +49,7 @@ class _TikTokAppState extends State<TikTokApp> {
         GlobalMaterialLocalizations.delegate,
       ],
       supportedLocales: const [Locale("en"), Locale("ko")],
-      themeMode: _isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      themeMode: ThemeMode.system,
       theme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.light,
