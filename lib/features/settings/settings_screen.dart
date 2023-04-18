@@ -51,53 +51,6 @@ class SettingsScreen extends ConsumerWidget {
             ),
           ),
           ListTile(
-            title: const Text("Log out (iOS)"),
-            textColor: Colors.red,
-            onTap: () {
-              showCupertinoDialog(
-                context: context,
-                builder: (context) => CupertinoAlertDialog(
-                  title: const Text("Are you sure?"),
-                  content: const Text("Plx don't go"),
-                  actions: [
-                    CupertinoDialogAction(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: const Text("No"),
-                    ),
-                    CupertinoDialogAction(
-                      onPressed: () => Navigator.of(context).pop(),
-                      isDestructiveAction: true,
-                      child: const Text("Yes"),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-          ListTile(
-            title: const Text("Log out (Android)"),
-            textColor: Colors.red,
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (context) => AlertDialog(
-                  title: const Text("Are you sure?"),
-                  content: const Text("Plx don't go"),
-                  actions: [
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: const Text("No"),
-                    ),
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: const Text("Yes"),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-          ListTile(
             title: const Text("Log out (iOS / Bottom)"),
             textColor: Colors.red,
             onTap: () {

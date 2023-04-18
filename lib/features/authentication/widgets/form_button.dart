@@ -3,11 +3,12 @@ import 'package:tiktok_clone/common/widgets/dark_mode_configuration/dark_mode_co
 import 'package:tiktok_clone/constants/sizes.dart';
 
 class FormButton extends StatelessWidget {
-  const FormButton(
-      {super.key,
-      required this.disabled,
-      required this.onTap,
-      required this.text});
+  const FormButton({
+    super.key,
+    required this.disabled,
+    required this.onTap,
+    required this.text,
+  });
 
   final bool disabled;
   final void Function() onTap;
