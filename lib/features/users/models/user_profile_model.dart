@@ -19,4 +19,14 @@ class UserProfileModel {
         name = "",
         bio = "",
         link = "";
+
+  Map<String, String> toJSON() {
+    return {
+      "uid": uid,
+      "email": email,
+      "name": name,
+      "bio": bio,
+      "link": link,
+    };
+  }
 }
