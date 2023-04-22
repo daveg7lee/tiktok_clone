@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tiktok_clone/features/authentication/repos/authentication__repo.dart';
+import 'package:tiktok_clone/features/authentication/view_models/signup_view_model.dart';
 import 'package:tiktok_clone/features/users/models/user_profile_model.dart';
 import 'package:tiktok_clone/features/users/repos/user_repo.dart';
 
@@ -27,8 +28,9 @@ class UsersViewModel extends AsyncNotifier<UserProfileModel> {
     return UserProfileModel.empty();
   }
 
-  Future<void> createAccount(
-      UserCredential credential, String username, String? birthday) async {
+  Future<void> createAccount(UserCredential credential) async {
+    final form = ref.read(signUpForm);
+
     if (credential.user == null) {
       throw Exception("Account not created");
     }
@@ -37,9 +39,9 @@ class UsersViewModel extends AsyncNotifier<UserProfileModel> {
       bio: "undefined",
       link: "undefined",
       uid: credential.user!.uid,
-      name: credential.user!.displayName ?? username,
+      name: credential.user!.displayName ?? form["username"],
       email: credential.user!.email ?? "anon@anon.com",
-      birthday: birthday ?? "",
+      birthday: form["birthday"] ?? "",
     );
     await _usersRepository.createProfile(profile);
     state = AsyncValue.data(profile);
