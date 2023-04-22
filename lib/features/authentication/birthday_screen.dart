@@ -16,12 +16,20 @@ class BirthdayScreen extends ConsumerStatefulWidget {
 class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
   final TextEditingController _birthdayController = TextEditingController();
 
+  String _birthday = "";
   DateTime initialDate = DateTime.now();
 
   @override
   void initState() {
     super.initState();
     _setTextFieldDate(initialDate);
+    _birthdayController.addListener(
+      () {
+        setState(() {
+          _birthday = _birthdayController.text;
+        });
+      },
+    );
   }
 
   @override
@@ -31,6 +39,8 @@ class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
   }
 
   void _onNextTap() {
+    final state = ref.read(signUpForm.notifier).state;
+    ref.read(signUpForm.notifier).state = {...state, "birthday": _birthday};
     ref.read(signUpProvider.notifier).signUp(context);
   }
 

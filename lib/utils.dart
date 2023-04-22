@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 bool isDarkMode(BuildContext context) =>
@@ -10,9 +9,7 @@ void showFirebaseErrorSnack(
 ) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
-      content: Text(
-        (error as FirebaseException).message ?? "Something wen't wrong",
-      ),
+      content: Text("$error"),
     ),
   );
 }

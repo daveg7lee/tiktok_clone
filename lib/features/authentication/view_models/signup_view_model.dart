@@ -26,7 +26,10 @@ class SignUpViewModel extends AsyncNotifier<void> {
         final userCredential =
             await _authRepo.emailSignUp(form["email"], form["password"]);
 
-        await users.createAccount(userCredential);
+        print(form);
+
+        await users.createAccount(
+            userCredential, form["username"], form["birthday"]);
       },
     );
     if (state.hasError) {
