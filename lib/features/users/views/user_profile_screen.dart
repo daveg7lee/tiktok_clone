@@ -6,6 +6,7 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/settings/settings_screen.dart';
 import 'package:tiktok_clone/features/users/view_models/users_view_model.dart';
 import 'package:tiktok_clone/features/users/views/widgets/avatar.dart';
+import 'package:tiktok_clone/features/users/views/widgets/edit_info.dart';
 import 'package:tiktok_clone/features/users/views/widgets/persistent_tab_bar.dart';
 import 'package:tiktok_clone/features/users/views/widgets/user_info.dart';
 
@@ -25,6 +26,15 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
     );
   }
 
+  void _onEditPressed() async {
+    await showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => const EditInfo(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ref.watch(usersProvider).when(
@@ -35,6 +45,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
             child: CircularProgressIndicator.adaptive(),
           ),
           data: (data) => Scaffold(
+            resizeToAvoidBottomInset: false,
             backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
             body: SafeArea(
               child: DefaultTabController(
@@ -45,6 +56,12 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                       SliverAppBar(
                         title: Text(data.name),
                         actions: [
+                          IconButton(
+                            onPressed: _onEditPressed,
+                            icon: const FaIcon(
+                              FontAwesomeIcons.penToSquare,
+                            ),
+                          ),
                           IconButton(
                             onPressed: _onGearPressed,
                             icon: const FaIcon(
@@ -134,26 +151,26 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
                               ),
                             ),
                             Gaps.v14,
-                            const Padding(
-                              padding: EdgeInsets.symmetric(
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: Sizes.size32),
                               child: Text(
-                                "All highlights and where to watch live matches on FIFA+",
+                                ref.read(usersProvider).value?.bio ?? "",
                                 textAlign: TextAlign.center,
                               ),
                             ),
                             Gaps.v14,
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                FaIcon(
+                              children: [
+                                const FaIcon(
                                   FontAwesomeIcons.link,
                                   size: Sizes.size12,
                                 ),
                                 Gaps.h4,
                                 Text(
-                                  "https://www.fifa.com/fifaplus/en/home",
-                                  style: TextStyle(
+                                  ref.read(usersProvider).value?.link ?? "",
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
