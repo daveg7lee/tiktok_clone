@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/videos/models/video_model.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config.vm.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_button.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_comments.dart';
@@ -13,12 +14,18 @@ import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class VideoPost extends ConsumerStatefulWidget {
-  const VideoPost(
-      {super.key, required this.onVideoFinished, required this.index});
+  const VideoPost({
+    super.key,
+    required this.onVideoFinished,
+    required this.index,
+    required this.videoData,
+  });
 
   final Function onVideoFinished;
 
   final int index;
+
+  final VideoModel videoData;
 
   @override
   VideoPostState createState() => VideoPostState();
@@ -134,8 +141,9 @@ class VideoPostState extends ConsumerState<VideoPost>
           Positioned.fill(
             child: _videoPlayerController.value.isInitialized
                 ? VideoPlayer(_videoPlayerController)
-                : Container(
-                    color: Colors.black,
+                : Image.network(
+                    widget.videoData.thumbnailUrl,
+                    fit: BoxFit.cover,
                   ),
           ),
           Positioned.fill(
@@ -172,10 +180,10 @@ class VideoPostState extends ConsumerState<VideoPost>
             left: 15,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
+              children: [
                 Text(
-                  "@기현",
-                  style: TextStyle(
+                  "@${widget.videoData.creator}",
+                  style: const TextStyle(
                     fontSize: 18,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -183,8 +191,8 @@ class VideoPostState extends ConsumerState<VideoPost>
                 ),
                 Gaps.v12,
                 Text(
-                  "This is my test video!!",
-                  style: TextStyle(
+                  widget.videoData.description,
+                  style: const TextStyle(
                     fontSize: Sizes.size16,
                     color: Colors.white,
                     fontWeight: FontWeight.normal,
@@ -211,25 +219,26 @@ class VideoPostState extends ConsumerState<VideoPost>
               right: 15,
               child: Column(
                 children: [
-                  const CircleAvatar(
+                  CircleAvatar(
                     radius: 25,
                     backgroundColor: Colors.black,
                     foregroundColor: Colors.white,
                     foregroundImage: NetworkImage(
-                      "https://avatars.githubusercontent.com/u/60314779?v=4",
+                      "https://firebasestorage.googleapis.com/v0/b/tiktok-clone-with-nico.appspot.com/o/avatars%2F${widget.videoData.creatorUid}?alt=media",
                     ),
-                    child: Text("기현"),
+                    child: Text(widget.videoData.creator),
                   ),
                   Gaps.v28,
                   VideoButton(
-                    text: S.of(context).likeCount(10000),
+                    text: S.of(context).likeCount(widget.videoData.likes),
                     icon: FontAwesomeIcons.solidHeart,
                   ),
                   Gaps.v28,
                   GestureDetector(
                     onTap: () => _onCommentTap(context),
                     child: VideoButton(
-                      text: S.of(context).commentCount(453),
+                      text:
+                          S.of(context).commentCount(widget.videoData.comments),
                       icon: FontAwesomeIcons.solidComment,
                     ),
                   ),
