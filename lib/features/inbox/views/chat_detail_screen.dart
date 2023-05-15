@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/inbox/view_models/messages_view_model.dart';
 
-class ChatDetailScreen extends StatefulWidget {
+class ChatDetailScreen extends ConsumerStatefulWidget {
   static const String routeName = "chatDetail";
   static const String routeURL = ":chatId";
 
@@ -12,17 +14,27 @@ class ChatDetailScreen extends StatefulWidget {
   const ChatDetailScreen({super.key, required this.chatId});
 
   @override
-  State<ChatDetailScreen> createState() => _ChatDetailScreenState();
+  ConsumerState<ChatDetailScreen> createState() => _ChatDetailScreenState();
 }
 
-class _ChatDetailScreenState extends State<ChatDetailScreen> {
+class _ChatDetailScreenState extends ConsumerState<ChatDetailScreen> {
+  final TextEditingController _editingController = TextEditingController();
+
   bool _isWriting = false;
 
-  void _stopWriting() {
-    FocusScope.of(context).unfocus();
+  void _onSendPress() {
     setState(() {
       _isWriting = false;
     });
+
+    final text = _editingController.text;
+
+    if (text == "") return;
+
+    ref.read(messagesProvider.notifier).sendMessage(text);
+
+    _editingController.text = "";
+    FocusScope.of(context).unfocus();
   }
 
   void _onStartWriting() {
@@ -33,6 +45,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = ref.watch(messagesProvider).isLoading;
     return Scaffold(
       appBar: AppBar(
         title: ListTile(
@@ -89,7 +102,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
       body: Stack(
         children: [
           GestureDetector(
-            onTap: _stopWriting,
+            onTap: () => FocusScope.of(context).unfocus(),
             child: ListView.separated(
                 padding: const EdgeInsets.symmetric(
                   vertical: Sizes.size20,
@@ -149,6 +162,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                   children: [
                     Expanded(
                       child: TextField(
+                        controller: _editingController,
                         onTap: _onStartWriting,
                         cursorColor: Theme.of(context).primaryColor,
                         decoration: InputDecoration(
@@ -181,7 +195,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                     ),
                     Gaps.h12,
                     GestureDetector(
-                      onTap: _stopWriting,
+                      onTap: isLoading ? null : _onSendPress,
                       child: Container(
                         padding: const EdgeInsets.all(Sizes.size8),
                         decoration: BoxDecoration(

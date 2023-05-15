@@ -6,9 +6,9 @@ import 'package:tiktok_clone/features/authentication/repos/authentication__repo.
 import 'common/widgets/main_navigation/main_navigation_screen.dart';
 import 'features/authentication/login_screen.dart';
 import 'features/authentication/sign_up_screen.dart';
-import 'features/inbox/activity_screen.dart';
-import 'features/inbox/chat_detail_screen.dart';
-import 'features/inbox/chats_screen.dart';
+import 'features/inbox/views/activity_screen.dart';
+import 'features/inbox/views/chat_detail_screen.dart';
+import 'features/inbox/views/chats_screen.dart';
 import 'features/onboarding/interests_screen.dart';
 import 'features/videos/views/video_recording_screen.dart';
 
