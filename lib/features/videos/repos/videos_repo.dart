@@ -20,6 +20,12 @@ class VideosRepository {
     await _db.collection("videos").add(data.toJson());
   }
 
+  Future<bool> isLiked(String videoId, String userId) async {
+    final query = _db.collection("likes").doc("${videoId}000$userId");
+    final like = await query.get();
+    return like.exists;
+  }
+
   Future<QuerySnapshot<Map<String, dynamic>>> fetchVideos({
     int? lastItemCreatedAt,
   }) {

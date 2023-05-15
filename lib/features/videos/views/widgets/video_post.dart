@@ -43,6 +43,8 @@ class VideoPostState extends ConsumerState<VideoPost>
 
   late bool _isPaused = !ref.read(playbackConfigProvider).autoplay;
   late bool _isMuted = ref.read(playbackConfigProvider).muted;
+  late int _likes = widget.videoData.likes;
+  late bool _isLiked = false;
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized &&
@@ -62,10 +64,17 @@ class VideoPostState extends ConsumerState<VideoPost>
     setState(() {});
   }
 
+  void _initIsLiked() async {
+    _isLiked = await ref
+        .read(videoPostProvider(widget.videoData.id).notifier)
+        .isLiked();
+  }
+
   @override
   void initState() {
     super.initState();
     _initVideoPlayer();
+    _initIsLiked();
     _animationController = AnimationController(
       vsync: this,
       lowerBound: 1.0,
@@ -107,6 +116,14 @@ class VideoPostState extends ConsumerState<VideoPost>
   }
 
   void _onLikeTap() {
+    if (_isLiked) {
+      _isLiked = false;
+      _likes = _likes - 1;
+    } else {
+      _isLiked = true;
+      _likes = _likes + 1;
+    }
+    setState(() {});
     ref.read(videoPostProvider(widget.videoData.id).notifier).likeVideo();
   }
 
@@ -237,8 +254,9 @@ class VideoPostState extends ConsumerState<VideoPost>
                   GestureDetector(
                     onTap: _onLikeTap,
                     child: VideoButton(
-                      text: S.of(context).likeCount(widget.videoData.likes),
+                      text: S.of(context).likeCount(_likes),
                       icon: FontAwesomeIcons.solidHeart,
+                      color: _isLiked ? Colors.red : Colors.white,
                     ),
                   ),
                   Gaps.v28,
@@ -248,12 +266,14 @@ class VideoPostState extends ConsumerState<VideoPost>
                       text:
                           S.of(context).commentCount(widget.videoData.comments),
                       icon: FontAwesomeIcons.solidComment,
+                      color: Colors.white,
                     ),
                   ),
                   Gaps.v28,
                   const VideoButton(
                     text: "Share",
                     icon: FontAwesomeIcons.share,
+                    color: Colors.white,
                   ),
                 ],
               )),
